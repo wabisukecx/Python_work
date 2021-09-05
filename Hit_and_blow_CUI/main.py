@@ -6,14 +6,14 @@
 # -------------------------------------------------------------------------------
 import random
 
-duplicate = True  # ランダムで数字を取り出すとき数字重複とする場合はTrue
-nbr_list = ['1', '2', '3', '4', '5', '6']  # ランダムで選出する数字の範囲
-n = 4  # ランダムで選出する桁数
-ans = []  # 答えを保持するリストの初期化
-life = 8  # 何回解答できるか
-total_value = 0  # 答えをリストから数値に変換する際の変数初期化
+duplicate = True  # if number duplicate in digits, set true
+nbr_list = ['1', '2', '3', '4', '5', '6']  # random selection range of value
+n = 4  # number of select digit
+ans = []  # initialize answer list
+life = 8  # number of times of challenge
+total_value = 0  # variable reset for list value to int value
 
-if duplicate:  # 数字重複の場合
+if duplicate:  # in the case of duplicate number in digits
     for i in range(n):
         ans.append(random.choice(nbr_list))  # ランダムに重複する可能性のある数字を選択
 else:  # 数字重複しない場合
