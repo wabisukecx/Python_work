@@ -174,8 +174,7 @@ if st.sidebar.button('チームスタッツとPERを表示する'):
     if selected_team != selected_opponent_team:
         try:
             # データベース接続
-            db_path = st.secrets["db_path"]
-            conn = sqlite3.connect(db_path)
+            conn = sqlite3.connect("Bleague_stats/bleague_stat.db")
             per_list, per_name_list = get_per(selected_team, conn)
             match_up = [selected_team, selected_opponent_team]
             ffactor_list = get_ffactor(match_up, conn)
