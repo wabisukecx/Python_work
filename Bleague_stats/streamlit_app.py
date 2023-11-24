@@ -1,3 +1,9 @@
+# ----------------------------------------------------------------------------
+# Name:        B-LEAGUE Player Stats
+# Author:      wabisuke
+# Created:     23/11/2023
+# Copyright:   (c) wabisuke 2023
+# ----------------------------------------------------------------------------
 import streamlit as st
 import sqlite3
 import pandas as pd
