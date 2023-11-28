@@ -1,9 +1,3 @@
-# ----------------------------------------------------------------------------
-# Name:        B-LEAGUE Player Stats
-# Author:      wabisuke
-# Created:     23/11/2023
-# Copyright:   (c) wabisuke 2023
-# ----------------------------------------------------------------------------
 import streamlit as st
 import sqlite3
 import pandas as pd
@@ -70,6 +64,8 @@ def get_per(tgt_team, conn):
     aper_list = []
     per_list = []
     per_name_list = []
+    game_list = []
+    minute_list = []
 
     # Fetch league and team statistics in fewer queries
     league_stats_query = "SELECT * FROM player_stats"
@@ -116,6 +112,8 @@ def get_per(tgt_team, conn):
         if player['team'] == tgt_team:
             aper_list.append(aper)
             per_name_list.append(player_name)
+            game_list.append(player['g'])
+            minute_list.append(player['minute'])
 
     # Adjust PER to a league scale of 15
     avr_league_aper = league_aper / num_players
@@ -123,8 +121,7 @@ def get_per(tgt_team, conn):
         per = aepr * (15 / avr_league_aper)
         per_list.append(per)
 
-    return per_list, per_name_list
-
+    return per_list, per_name_list, game_list, minute_list
 def get_ffactor(tgt_team, conn):
     ffactor_list = []
     # 各チームの統計情報を格納するための辞書
@@ -181,7 +178,9 @@ if st.sidebar.button('チームスタッツとPERを表示する'):
         try:
             # データベース接続
             conn = sqlite3.connect("Bleague_stats/bleague_stat.db")
-            per_list, per_name_list = get_per(selected_team, conn)
+            #conn = sqlite3.connect("bleague_stat.db")
+            per_list, per_name_list, game_list, playtime_list = get_per(selected_team, conn)
+            opp_per_list, opp_per_name_list, opp_game_list, opp_playtime_list = get_per(selected_opponent_team, conn)
             match_up = [selected_team, selected_opponent_team]
             ffactor_list = get_ffactor(match_up, conn)
             index = ffactor_list.index(selected_opponent_team)
@@ -200,13 +199,24 @@ if st.sidebar.button('チームスタッツとPERを表示する'):
             per_df = pd.DataFrame(
                 {
                 'Player': per_name_list,
+                'Games': game_list,
+                'Minutes': playtime_list,
                 'PER': per_list
+                }
+            )
+            opp_per_df = pd.DataFrame(
+                {
+                'Player': opp_per_name_list,
+                'Games': opp_game_list,
+                'Minutes': opp_playtime_list,
+                'PER': opp_per_list
                 }
             )
             
             # Streamlitで表を表示
             st.table(ffactor_df)
             st.table(per_df)
+            st.table(opp_per_df)
         except sqlite3.Error as e:
             st.error(f"データベースエラー: {e}")
     else:
