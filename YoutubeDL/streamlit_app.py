@@ -31,8 +31,7 @@ def get_download_options(ope_mode):
     if ope_mode == "音声のみ":
         return {
             'format': 'bestaudio/best',
-            'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}],
-            'ffmpeg_location': '/usr/bin/ffmpeg'
+            'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}]
         }
     else:
         return {
