@@ -32,11 +32,13 @@ def get_download_options(ope_mode):
         return {
             'format': 'bestaudio/best',
             'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}]
+            'ffmpeg_location': "/usr/bin/ffmpeg"
         }
     else:
         return {
             'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
             'postprocessors': [{'key': 'FFmpegVideoConvertor', 'preferedformat': 'mp4'}]
+            'ffmpeg_location': "/usr/bin/ffmpeg"
         }
 
 if __name__ == '__main__':
