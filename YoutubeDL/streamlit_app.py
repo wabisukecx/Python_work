@@ -1,4 +1,5 @@
 import streamlit as st
+import ffmpeg
 from yt_dlp import YoutubeDL
 
 # Streamlitのウェブインターフェース
