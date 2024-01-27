@@ -39,7 +39,7 @@ def check_condition(pattern, applyset, mode, i):
 def main():
     st.title('イーオンズ・エンド - サプライ自動生成')
 
-    conn = sqlite3.connect('Aeons_end.db')
+    conn = sqlite3.connect(r"C:\Users\tucon\Desktop\Aeons_end.db")
     cur = conn.cursor()
 
     # サプライ検索条件の選択
